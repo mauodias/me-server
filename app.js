@@ -1,4 +1,4 @@
-require('dot-env').load();
+require('dotenv').load();
 
 var express = require('express');
 var path = require('path');
@@ -16,7 +16,8 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // connect to MongoDB
-mongoose.connect(process.env.MONGOLAB_URI)
+console.log(process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGOLAB_URI);
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
