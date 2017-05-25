@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var bodyParser = require('body-parser');
+var favicon = require('serve-favicon')
 
 var routes = require('./routes/index');
 var cardapio = require('./routes/cardapio');
