@@ -16,8 +16,8 @@ var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // connect to MongoDB
-console.log(process.env.MONGOLAB_URI);
-mongoose.connect(process.env.MONGOLAB_URI)
+console.log(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI)
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
