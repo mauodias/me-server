@@ -15,15 +15,14 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
     Pedido.find({
         Id: req.params.id
-    }, function(err, post) {
+    }, function(err, item) {
         if (err) return next(err);
-        res.json(post);
+        res.json(item);
     });
 });
 
-/* POST /pedidos/novo?params */
+/* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
-    console.log(req.query);
     Pedido.create({
         Id: req.query.id,
         ItemPedidos: req.query.items.split(','),
@@ -31,10 +30,24 @@ router.post('/novo', function(req, res, next) {
         HoraCriacao: Date.now(),
         Status: 0,
         HoraPronto: null
-    }, function(err, post) {
+    }, function(err, item) {
         if (err) return next(err);
-        res.json(post);
+        res.json(item);
     });
+});
+
+/* POST /pedidos/id?status={status} */
+router.put('/:id', function(req, res, next) {
+    Pedido.findOneAndUpdate({
+        Id: req.params.id
+    },
+    {
+        Status: req.query.status
+    },
+    function (err, item) {
+        res.json(true);
+    })
+
 });
 
 module.exports = router;

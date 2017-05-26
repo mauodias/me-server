@@ -1,5 +1,19 @@
 doctype html
-html. // THAT DOT
-    <body>
-        <div>Cardápio Eletrônico</div>
-    </body>
+html
+    body
+        div Cardápio Eletrônico
+        br
+        div Métodos Disponíveis:
+        ul
+            li Cardapio
+            ul
+                li GET /cardapio
+                li GET /cardapio/{id}
+                li POST /cardapio/novo?{params}
+            br
+            li Pedidos
+            ul
+                li GET /pedidos
+                li GET /pedidos/{id}
+                li POST /pedidos/novo?{params}
+                li PUT /pedidos/{id}?status={status}
