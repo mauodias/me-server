@@ -7,13 +7,65 @@ html
         ul
             li Cardapio
             ul
-                li GET /cardapio
-                li GET /cardapio/{id}
-                li POST /cardapio/novo?{params}
+                li <strong>GET /cardapio</strong>
+                ul
+                    li Retorna todos os objetos Item
+                    br
+                li <strong>GET /cardapio/{id}</strong>
+                ul
+                    li Retorna o objeto Item com o Id referente
+                    br
+                li <strong>POST /cardapio/novo?{params}</strong>
+                ul
+                    li Cria um novo objeto Item com os seguintes parâmetros:
+                    ul
+                        li Id: Number
+                        li Nome: String
+                        li Descricao: String
+                        li Ingredientes: [String]
+                        li Preco: Number
+
             br
             li Pedidos
             ul
-                li GET /pedidos
-                li GET /pedidos/{id}
-                li POST /pedidos/novo?{params}
-                li PUT /pedidos/{id}?status={status}
+                li <strong>GET /pedidos</strong>
+                ul
+                    li Retorna todos os objetos Pedido
+                    br
+                li <strong>GET /pedidos/{id}</strong>
+                ul
+                    li Retorna o objeto Pedido com o Id referente
+                    br
+                li <strong>POST /pedidos/novo?{params}</strong>
+                ul
+                    li Cria um objeto Pedido com os seguintes parâmetros:
+                    ul
+                        li Id: Number
+                        li ItemPedidos: [ItemPedido] (?)
+                        li IdComanda: Number
+                        li HoraCriacao: Date (default: Date.now())
+                        li Status: Number (default: 0)
+                        li HoraPronto: Date (default: null)
+                        br
+                li <strong>PUT /pedidos/{id}?status={status}</strong>
+                ul
+                    li Altera o status do objeto Pedido com o Id informado para o status informado
+            br
+            li Mesa
+            ul
+                li <strong>GET /mesas</strong>
+                ul
+                    li Retorna todos os objetos Mesa
+                    br
+                li <strong>GET /mesas/{num}</strong>
+                ul
+                    li Retorna o objeto Mesa com o número referente
+                    br
+                li <strong>POST /mesas/{num}</strong>
+                ul
+                    Inverte o valor da propriedade IsLivre do objeto Mesa informado
+                    br
+                    br
+                li <strong>POST /mesas/criar/{num}</strong>
+                ul
+                    li Cria um objeto Mesa com o número informado e a propriedade IsLivre com o valor true por padrão

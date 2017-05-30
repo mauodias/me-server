@@ -3,8 +3,7 @@ var mongoose = require('mongoose');
 var ItemPedidoSchema = new mongoose.Schema({
     Id: Number,
     Item: String,
-    Obs: String,
-    Pedido: Number,
+    Obs: String
 });
 
 module.exports = mongoose.model('ItemPedido', ItemPedidoSchema);

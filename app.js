@@ -8,6 +8,7 @@ var favicon = require('serve-favicon')
 var routes = require('./routes/index');
 var cardapio = require('./routes/cardapio');
 var pedidos = require('./routes/pedidos');
+var mesas = require('./routes/mesas');
 
 // load mongoose package
 var mongoose = require('mongoose');
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/cardapio', cardapio);
 app.use('/pedidos', pedidos);
+app.use('/mesas', mesas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

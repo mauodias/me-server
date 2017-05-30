@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');
 
+var ItemPedido = require('./ItemPedido.js');
+
 var PedidoSchema = new mongoose.Schema({
     Id: Number,
-    ItemPedidos: [ {type: Number} ],
+    ItemPedidos: [ {type: ItemPedido} ],
     IdComanda: Number,
     HoraCriacao: Date,
     Status: Number,
