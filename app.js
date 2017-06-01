@@ -9,7 +9,7 @@ var routes = require('./routes/index');
 var cardapio = require('./routes/cardapio');
 var pedidos = require('./routes/pedidos');
 var mesas = require('./routes/mesas');
-var comandas = require('./routes/comandas');
+//var comandas = require('./routes/comandas');
 
 // load mongoose package
 var mongoose = require('mongoose');
@@ -38,7 +38,7 @@ app.use('/', routes);
 app.use('/cardapio', cardapio);
 app.use('/pedidos', pedidos);
 app.use('/mesas', mesas);
-app.use('/comandas', comandas);
+//app.use('/comandas', comandas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
