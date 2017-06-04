@@ -8,6 +8,7 @@ var Item = require('../models/Item.js')
 
 /* GET /pedidos. */
 router.get('/', function(req, res, next) {
+    console.log('GET /pedidos')
     Pedido.find(function(err, items) {
         if (err) return next(err);
         res.json(items);
@@ -16,6 +17,7 @@ router.get('/', function(req, res, next) {
 
 /* GET /pedidos/id */
 router.get('/:id', function(req, res, next) {
+    console.log('GET /pedidos/' + req.params.id)
     Pedido.findOne({
         Id: req.params.id
     }, function(err, item) {
@@ -35,15 +37,24 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
-    console.log(req.body);
+    var i_pedidos = [];
+    req.body.ItemPedidos.split(';').forEach(function(item, index){
+        i_pedidos.push(new ItemPedido({
+            Item: JSON.parse(item).Item,
+            Obs: JSON.parse(item).Obs
+        }))
+    });
     Pedido.create({
         Id: req.body.Id,
-        ItemPedidos: req.body.ItemPedidos,
+        ItemPedidos: [],
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
         Status: 0,
         HoraPronto: null
     }, function(err, item) {
+        i_pedidos.forEach(function(i_ped, index){
+            item.ItemPedidos.push({Item: i_ped.Item, Obs: i_ped.Obs});
+        });
         if (err) return next(err);
         res.json(item);
     });
