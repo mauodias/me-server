@@ -35,9 +35,10 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
+    console.log(req.body);
     Pedido.create({
         Id: req.body.Id,
-        //ItemPedidos: req.body.ItemPedidos.split(','),
+        ItemPedidos: req.body.ItemPedidos,
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
         Status: 0,
