@@ -35,6 +35,13 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
+    /*var i_pedidos = [];
+    req.body.ItemPedidos.split(';').forEach(function(item, index){
+        i_pedidos.push(new ItemPedido({
+            Item: JSON.parse(item).Item,
+            Obs: JSON.parse(item).Obs
+        }))
+    });*/
     Pedido.create({
         Id: req.body.Id,
         ItemPedidos: [],
@@ -45,6 +52,7 @@ router.post('/novo', function(req, res, next) {
     }, function(err, item) {
         req.body.ItemPedidos.forEach(function(i_ped, index){
             item.ItemPedidos.push({Item: i_ped.Item, Obs: i_ped.Obs});
+            item.save();
         });
         if (err) return next(err);
         res.json(item);
