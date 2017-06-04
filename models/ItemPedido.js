@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var ItemPedidoSchema = new mongoose.Schema({
     Id: Number,
-    Item: String,
+    Item: Number,
     Obs: String
 });
 
