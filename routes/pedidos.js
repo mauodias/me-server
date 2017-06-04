@@ -36,9 +36,9 @@ router.get('/:id', function(req, res, next) {
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
     Pedido.create({
-        Id: req.query.id,
-        ItemPedidos: req.query.items.split(','),
-        IdComanda: req.query.idcomanda,
+        Id: req.body.Id,
+        //ItemPedidos: req.body.ItemPedidos.split(','),
+        IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
         Status: 0,
         HoraPronto: null
@@ -49,12 +49,12 @@ router.post('/novo', function(req, res, next) {
 });
 
 /* POST /pedidos/id?status={status} */
-router.put('/:id', function(req, res, next) {
+router.put('/', function(req, res, next) {
     Pedido.findOneAndUpdate({
-        Id: req.params.id
+        Id: req.body.Id
     },
     {
-        Status: req.query.status
+        Status: req.body.Status
     },
     function (err, item) {
         res.json(true);
