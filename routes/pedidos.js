@@ -22,12 +22,10 @@ router.get('/:id', function(req, res, next) {
         Id: req.params.id
     }, function(err, item) {
         if (err) return next(err);
-        console.log(item);
         var itempedidos;
         ItemPedido.find({
             Id: {$in: item.ItemPedidos}
         }, function(err, itens) {
-            console.log(itens);
             itempedidos = itens;
         });
         item.ItemPedidos = itempedidos;
@@ -37,13 +35,6 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
-    var i_pedidos = [];
-    req.body.ItemPedidos.split(';').forEach(function(item, index){
-        i_pedidos.push(new ItemPedido({
-            Item: JSON.parse(item).Item,
-            Obs: JSON.parse(item).Obs
-        }))
-    });
     Pedido.create({
         Id: req.body.Id,
         ItemPedidos: [],
@@ -52,7 +43,7 @@ router.post('/novo', function(req, res, next) {
         Status: 0,
         HoraPronto: null
     }, function(err, item) {
-        i_pedidos.forEach(function(i_ped, index){
+        req.body.ItemPedidos.forEach(function(i_ped, index){
             item.ItemPedidos.push({Item: i_ped.Item, Obs: i_ped.Obs});
         });
         if (err) return next(err);
