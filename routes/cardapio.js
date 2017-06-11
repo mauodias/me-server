@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 /* GET /cardapio/id */
 router.get('/:id', function(req, res, next) {
-  Item.find({Id: req.params.id}, function (err, post) {
+  Item.findOne({Id: req.params.id}, function (err, post) {
     if (err) return next(err);
     res.json(post);
   });

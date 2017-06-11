@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
     Pedido.find(function(err, items) {
         if (err) return next(err);
         res.json(items);
-    }).select({"_id": 0, "__v": 0});
+    });
 });
 
 /* GET /pedidos/id */
@@ -22,26 +22,14 @@ router.get('/:id', function(req, res, next) {
         Id: req.params.id
     }, function(err, item) {
         if (err) return next(err);
-        var itempedidos;
-        ItemPedido.find({
-            Id: {$in: item.ItemPedidos}
-        }, function(err, itens) {
-            itempedidos = itens;
-        });
-        item.ItemPedidos = itempedidos;
         res.json(item);
-    }).select({"_id": 0, "__v": 0});
+    });
 });
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
-    /*var i_pedidos = [];
-    req.body.ItemPedidos.split(';').forEach(function(item, index){
-        i_pedidos.push(new ItemPedido({
-            Item: JSON.parse(item).Item,
-            Obs: JSON.parse(item).Obs
-        }))
-    });*/
+    console.log('POST /pedidos/novo');
+    console.log(' - BODY: ' + JSON.stringify(req.body));
     Pedido.create({
         Id: req.body.Id,
         ItemPedidos: [],
@@ -49,19 +37,25 @@ router.post('/novo', function(req, res, next) {
         HoraCriacao: Date.now(),
         Status: 0,
         HoraPronto: null
-    }, function(err, item) {
-        console.log(req.body.ItemPedidos);
-        req.body.ItemPedidos.split(';').forEach(function(i_ped, index){
-            item.ItemPedidos.push({Item: i_ped.Item, Obs: i_ped.Obs});
-            item.save();
+    }, function(err, pedido) {
+        var itemped = JSON.parse(req.body.ItemPedidos);
+        itemped.forEach(function(each, index){
+            Item.findOne({
+                Id: each.Item
+            }, function(err, item){
+                pedido.ItemPedidos.push({Item: item, Obs: each.Obs});
+                pedido.save();
+            });
         });
         if (err) return next(err);
-        res.json(item);
+        res.json(pedido);
     });
 });
 
 /* POST /pedidos/id?status={status} */
 router.put('/', function(req, res, next) {
+    console.log('PUT /pedidos');
+    console.log(' - BODY: ' + JSON.stringify(req.body));
     Pedido.findOneAndUpdate({
         Id: req.body.Id
     },

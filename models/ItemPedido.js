@@ -2,8 +2,10 @@ var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection);
 
+var Item = require('./Item.js')
+
 var ItemPedidoSchema = new mongoose.Schema({
-    Item: Number,
+    Item: Item.schema,
     Obs: String
 });
 
