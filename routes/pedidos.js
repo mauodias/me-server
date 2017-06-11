@@ -50,7 +50,8 @@ router.post('/novo', function(req, res, next) {
         Status: 0,
         HoraPronto: null
     }, function(err, item) {
-        req.body.ItemPedidos.forEach(function(i_ped, index){
+        console.log(req.body.ItemPedidos);
+        req.body.ItemPedidos.split(';').forEach(function(i_ped, index){
             item.ItemPedidos.push({Item: i_ped.Item, Obs: i_ped.Obs});
             item.save();
         });

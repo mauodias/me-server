@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose.connection);
 
 var ComandaSchema = new mongoose.Schema({
-    Id: Number,
     IdCliente: Number,
     Mesa: Number,
     Encerrada: Boolean,
@@ -10,4 +11,5 @@ var ComandaSchema = new mongoose.Schema({
     DataFechamento: Date,
 });
 
+ComandaSchema.plugin(autoIncrement.plugin, { model: 'Comanda', field: 'Id' });
 module.exports = mongoose.model('Comanda', ComandaSchema);

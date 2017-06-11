@@ -9,6 +9,9 @@ var routes = require('./routes/index');
 var cardapio = require('./routes/cardapio');
 var pedidos = require('./routes/pedidos');
 var mesas = require('./routes/mesas');
+
+//var sock = require('./sock');
+
 //var comandas = require('./routes/comandas');
 
 // load mongoose package
