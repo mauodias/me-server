@@ -6,7 +6,8 @@ var Item = require('./Item.js')
 
 var ItemPedidoSchema = new mongoose.Schema({
     Item: Item.schema,
-    Obs: String
+    Obs: String,
+    Status: {type: Boolean, default: false}
 });
 
 ItemPedidoSchema.plugin(autoIncrement.plugin, { model: 'ItemPedido', field: 'Id' });

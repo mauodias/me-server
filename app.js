@@ -9,6 +9,7 @@ var routes = require('./routes/index');
 var cardapio = require('./routes/cardapio');
 var pedidos = require('./routes/pedidos');
 var mesas = require('./routes/mesas');
+var reset = require('./routes/reset')
 
 //var sock = require('./sock');
 
@@ -41,6 +42,7 @@ app.use('/', routes);
 app.use('/cardapio', cardapio);
 app.use('/pedidos', pedidos);
 app.use('/mesas', mesas);
+app.use('/reset', reset);
 //app.use('/comandas', comandas);
 
 // catch 404 and forward to error handler

@@ -9,7 +9,9 @@ var Item = require('../models/Item.js')
 /* GET /pedidos. */
 router.get('/', function(req, res, next) {
     console.log('GET /pedidos')
-    Pedido.find(function(err, items) {
+    Pedido.find({
+        Status: {$ne: 2}
+    },function(err, items) {
         if (err) return next(err);
         res.json(items);
     });
@@ -26,12 +28,22 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
+/* GET /pedidos/comanda/id */
+router.get('/comanda/:id', function(req, res, next) {
+    console.log('GET /pedidos/comanda')
+    Pedido.find({
+        IdComanda: req.params.id
+    },function(err, items) {
+        if (err) return next(err);
+        res.json(items);
+    });
+});
+
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
     console.log('POST /pedidos/novo');
     console.log(' - BODY: ' + JSON.stringify(req.body));
     Pedido.create({
-        Id: req.body.Id,
         ItemPedidos: [],
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
@@ -52,7 +64,7 @@ router.post('/novo', function(req, res, next) {
     });
 });
 
-/* POST /pedidos/id?status={status} */
+/* PUT /pedidos/id?status={status} */
 router.put('/', function(req, res, next) {
     console.log('PUT /pedidos');
     console.log(' - BODY: ' + JSON.stringify(req.body));
@@ -63,7 +75,7 @@ router.put('/', function(req, res, next) {
         Status: req.body.Status
     },
     function (err, item) {
-        res.json(true);
+
     })
 });
 
