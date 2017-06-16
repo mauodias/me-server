@@ -33,13 +33,45 @@ router.post('/', function(req, res, next){
                 IsLivre: false
             }, function(err, mesa){
                 Comanda.create({
-                    Id: 0,
                     IdCliente: 0,
                     Mesa: req.body.NumMesa,
                     Encerrada: false,
                     Pedidos: [],
                     DataEntrada: Date.now(),
                     DataFechamento: null
+                }, function(err, comanda) {
+                    if (err) return next(err);
+                    res.json(comanda);
+                });
+            });
+        }
+        else {
+            res.json(false);
+        }
+
+    });
+});
+
+router.post('/fechar', function(req, res, next){
+    var result;
+    Mesa.findOne({
+        NumMesa: req.body.NumMesa
+    }, function(err, mesa) {
+        if (!mesa.IsLivre) {
+            Mesa.findOneAndUpdate({
+                NumMesa: req.body.NumMesa
+            },{
+                IsLivre: true
+            }, function(err, mesa){
+                if (err) return next(err);
+                Comanda.findOneAndUpdate({
+                    Mesa: req.body.NumMesa,
+                    Encerrada: false
+                },{
+                    Encerrada: true,
+                    DataFechamento: Date.now()
+                },{
+                    new: true
                 }, function(err, comanda) {
                     if (err) return next(err);
                     res.json(comanda);
@@ -69,6 +101,16 @@ router.post('/liberar', function(req, res, next){
         } else {
             res.json(false);
         }
+    });
+});
+
+router.post('/criar/:id', function(req, res, next){
+    Mesa.create({
+        NumMesa: req.params.id,
+        IsLivre: true
+    }, function(err, mesa) {
+        if (err) return next(err);
+            res.json(mesa)
     });
 });
 
