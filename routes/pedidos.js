@@ -30,7 +30,7 @@ router.get('/:id', function(req, res, next) {
 
 /* GET /pedidos/comanda/id */
 router.get('/comanda/:id', function(req, res, next) {
-    console.log('GET /pedidos/comanda/{}'.format(req.params.id))
+    console.log('GET /pedidos/comanda/' + req.params.id)
     Pedido.find({
         IdComanda: req.params.id
     },function(err, items) {
@@ -50,7 +50,7 @@ router.post('/novo', function(req, res, next) {
         Status: 0,
         HoraPronto: null
     }, function(err, pedido) {
-        var itemped = JSON.parse(req.body.ItemPedidos);
+        var itemped = req.body.ItemPedidos;
         itemped.forEach(function(each, index){
             Item.findOne({
                 Id: each.Item
@@ -77,6 +77,7 @@ router.put('/', function(req, res, next) {
     },
     function (err, item) {
         req.app.io.emit('cozinha');
+        res.json(true);
     })
 });
 
