@@ -61,6 +61,7 @@ router.post('/novo', function(req, res, next) {
             });
         });
         if (err) return next(err);
+        console.log(pedido);
         res.json(pedido);
     });
 });
