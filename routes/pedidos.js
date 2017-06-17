@@ -28,17 +28,6 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-/* GET /pedidos/comanda/id */
-router.get('/comanda/:id', function(req, res, next) {
-    console.log('GET /pedidos/comanda/' + req.params.id)
-    Pedido.find({
-        IdComanda: req.params.id
-    },function(err, items) {
-        if (err) return next(err);
-        res.json(items);
-    });
-});
-
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
     console.log('POST /pedidos/novo');
@@ -73,7 +62,6 @@ router.put('/', function(req, res, next) {
         Status: req.body.Status
     },
     function (err, item) {
-        req.app.io.emit('cozinha');
         res.json(true);
     })
 });
