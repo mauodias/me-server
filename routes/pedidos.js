@@ -30,7 +30,7 @@ router.get('/:id', function(req, res, next) {
 
 /* GET /pedidos/comanda/id */
 router.get('/comanda/:id', function(req, res, next) {
-    console.log('GET /pedidos/comanda')
+    console.log('GET /pedidos/comanda/{}'.format(req.params.id))
     Pedido.find({
         IdComanda: req.params.id
     },function(err, items) {
@@ -57,6 +57,7 @@ router.post('/novo', function(req, res, next) {
             }, function(err, item){
                 pedido.ItemPedidos.push({Item: item, Obs: each.Obs});
                 pedido.save();
+                req.app.io.emit('cozinha');
             });
         });
         if (err) return next(err);
@@ -75,7 +76,7 @@ router.put('/', function(req, res, next) {
         Status: req.body.Status
     },
     function (err, item) {
-
+        req.app.io.emit('cozinha');
     })
 });
 
