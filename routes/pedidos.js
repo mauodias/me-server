@@ -43,7 +43,7 @@ router.get('/comanda/:id', function(req, res, next) {
 router.post('/novo', function(req, res, next) {
     console.log('POST /pedidos/novo');
     console.log(' - BODY: ' + JSON.stringify(req.body));
-    Pedido.create({
+    Pedido.create({new: true},{
         ItemPedidos: [],
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
