@@ -55,14 +55,14 @@ router.post('/novo', function(req, res, next) {
 router.put('/', function(req, res, next) {
     console.log('PUT /pedidos');
     console.log(' - BODY: ' + JSON.stringify(req.body));
-    Pedido.findOneAndUpdate({
+    Pedido.findOneAndUpdate({new: true},{
         Id: req.body.Id
     },
     {
         Status: req.body.Status
     },
     function (err, item) {
-        res.json(true);
+        res.json(item);
     })
 });
 
