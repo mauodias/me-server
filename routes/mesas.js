@@ -32,7 +32,7 @@ router.post('/', function(req, res, next){
             },{
                 IsLivre: false
             }, function(err, mesa){
-                Comanda.create({
+                Comanda.create({new: true},{
                     IdCliente: 0,
                     Mesa: req.body.NumMesa,
                     Encerrada: false,
@@ -64,14 +64,12 @@ router.post('/fechar', function(req, res, next){
                 IsLivre: true
             }, function(err, mesa){
                 if (err) return next(err);
-                Comanda.findOneAndUpdate({
+                Comanda.findOneAndUpdate({new: true},{
                     Mesa: req.body.NumMesa,
                     Encerrada: false
                 },{
                     Encerrada: true,
                     DataFechamento: Date.now()
-                },{
-                    new: true
                 }, function(err, comanda) {
                     if (err) return next(err);
                     res.json(comanda);
