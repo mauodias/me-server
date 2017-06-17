@@ -54,7 +54,7 @@ router.post('/novo', function(req, res, next) {
 
         var itemped = req.body.ItemPedidos;
         itemped.forEach(function(each, index){
-            pedido.ItemPedidos.push({Item: item, Obs: each.Obs});
+            pedido.ItemPedidos.push({Item: each.Item, Obs: each.Obs});
         });
         pedido.save();
         req.app.io.emit('cozinha');
