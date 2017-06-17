@@ -50,18 +50,18 @@ router.post('/novo', function(req, res, next) {
         Status: 0,
         HoraPronto: null
     }, function(err, pedido) {
+        if (err) return next(err);
+        
         var itemped = req.body.ItemPedidos;
         itemped.forEach(function(each, index){
             Item.findOne({
                 Id: each.Item
             }, function(err, item){
                 pedido.ItemPedidos.push({Item: item, Obs: each.Obs});
-                pedido.save();
-                req.app.io.emit('cozinha');
             });
         });
-        if (err) return next(err);
-        console.log(pedido);
+        pedido.save();
+        req.app.io.emit('cozinha');
         res.json(pedido);
     });
 });
