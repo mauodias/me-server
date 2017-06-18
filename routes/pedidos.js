@@ -8,7 +8,8 @@ var Item = require('../models/Item.js')
 
 /* GET /pedidos. */
 router.get('/', function(req, res, next) {
-    console.log('GET /pedidos')
+    var logger = require('../app.js').logger;
+    logger('pedidos', 'GET /pedidos/');
     Pedido.find({
         Status: {$ne: 2}
     },function(err, items) {
@@ -19,12 +20,21 @@ router.get('/', function(req, res, next) {
 
 /* GET /pedidos/id */
 router.get('/:id', function(req, res, next) {
-    console.log('GET /pedidos/' + req.params.id)
+    var logger = require('../app.js').logger;
+    logger('pedidos', 'GET /pedidos/' + req.params.id);
     Pedido.findOne({
         Id: req.params.id
     }, function(err, item) {
         if (err) return next(err);
         res.json(item);
+    });
+});
+
+router.get('/deleteall', function(req, res, next){
+    var logger = require('../app.js').logger;
+    logger('pedidos', 'GET /pedidos/deleteall');
+    Pedido.delete({}, function(err, item){
+        logger('pedidos', 'Pedidos removidos.');
     });
 });
 
@@ -55,7 +65,7 @@ router.post('/novo', function(req, res, next) {
 router.put('/', function(req, res, next) {
     console.log('PUT /pedidos');
     console.log(' - BODY: ' + JSON.stringify(req.body));
-    Pedido.findOneAndUpdate({new: true},{
+    Pedido.findOneAndUpdate({
         Id: req.body.Id
     },
     {
