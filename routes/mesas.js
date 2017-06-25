@@ -42,6 +42,7 @@ router.post('/', function(req, res, next){
                 }, function(err, comanda) {
                     if (err) return next(err);
                     res.json(comanda);
+                    console.log('Comanda criada: ' + comanda.Id);
                 });
             });
         }
