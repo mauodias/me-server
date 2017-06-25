@@ -1,12 +1,13 @@
 var mongoose = require('mongoose');
 var autoIncrement = require('mongoose-auto-increment');
+var Pedido = require('./Pedido.js')
 autoIncrement.initialize(mongoose.connection);
 
 var ComandaSchema = new mongoose.Schema({
     IdCliente: Number,
     Mesa: Number,
     Encerrada: Boolean,
-    Pedidos: [{type: Number}],
+    Pedidos: [{type: Pedido.schema}],
     DataEntrada: Date,
     DataFechamento: Date,
 });

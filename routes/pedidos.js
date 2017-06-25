@@ -44,8 +44,8 @@ router.get('/delete/:id', function(req, res, next){
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
-    console.log('POST /pedidos/novo');
-    console.log(' - BODY: ' + JSON.stringify(req.body));
+    var logger = require('../app.js').logger;
+    logger('pedidos', 'GET /pedidos/novo?' + req.body);
     Pedido.create({new: true}, {
         ItemPedidos: [],
         IdComanda: req.body.IdComanda,
@@ -65,7 +65,7 @@ router.post('/novo', function(req, res, next) {
             Id: req.body.IdComanda
         }, function(err, comanda){
             if (err) return next(err);
-            comanda.ItemPedidos.push(pedido.Id);
+            comanda.ItemPedidos.push(pedido);
             comanda.save();
         });
 
