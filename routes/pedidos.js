@@ -3,6 +3,7 @@ var router = express.Router();
 
 var Pedido = require('../models/Pedido.js')
 var ItemPedido = require('../models/ItemPedido.js')
+var Comanda = require('../models/Comanda.js');
 var Item = require('../models/Item.js')
 
 
@@ -30,19 +31,22 @@ router.get('/:id', function(req, res, next) {
     });
 });
 
-router.get('/deleteall', function(req, res, next){
+router.get('/delete/:id', function(req, res, next){
     var logger = require('../app.js').logger;
     logger('pedidos', 'GET /pedidos/deleteall');
-    Pedido.delete({}, function(err, item){
-        logger('pedidos', 'Pedidos removidos.');
+    Pedido.remove({
+        Id: req.params.id
+    }, function(err, removed){
+        logger('pedidos', 'Pedido ' + req.params.Id + ' removido.');
     });
+    res.json(true);
 });
 
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
     console.log('POST /pedidos/novo');
     console.log(' - BODY: ' + JSON.stringify(req.body));
-    Pedido.create({
+    Pedido.create({new: true}, {
         ItemPedidos: [],
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
@@ -56,6 +60,15 @@ router.post('/novo', function(req, res, next) {
             pedido.ItemPedidos.push({Item: each.Item, Obs: each.Obs});
         });
         pedido.save();
+
+        Comanda.findOne({
+            Id: req.body.IdComanda
+        }, function(err, comanda){
+            if (err) return next(err);
+            comanda.ItemPedidos.push(pedido.Id);
+            comanda.save();
+        });
+
         req.app.io.emit('cozinha');
         res.json(pedido);
     });
@@ -63,8 +76,11 @@ router.post('/novo', function(req, res, next) {
 
 /* PUT /pedidos/id?status={status} */
 router.put('/', function(req, res, next) {
-    console.log('PUT /pedidos');
-    console.log(' - BODY: ' + JSON.stringify(req.body));
+    var logger = require('../app.js').logger;
+    logger(
+        'pedidos',
+        'PUT /pedidos/?Id=' + req.body.Id
+               + '&Status=' + req.body.Status);
     Pedido.findOneAndUpdate({
         Id: req.body.Id
     },

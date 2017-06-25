@@ -1,10 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var Item = require('../models/Item.js')
+var Item = require('../models/Item.js');
 
 /* GET cardapio. */
 router.get('/', function(req, res, next) {
+    var logger = require('../app.js').logger;
+    logger('cardapio', 'GET /cardapio');
     Item.find(function (err, items) {
       if (err) return next(err);
       res.json(items);

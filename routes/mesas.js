@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     Mesa.find(function(err, mesas) {
         if(err) return next(err);
         res.json(mesas);
-    }).select({"_id": 0, "__v": 0});
+    });
 });
 
 router.get('/:num', function(req, res, next){
@@ -18,7 +18,7 @@ router.get('/:num', function(req, res, next){
     }, function(err, mesa) {
         if (err) return next(err);
         res.json(mesa.IsLivre);
-    }).select({"_id": 0, "__v": 0});
+    });
 });
 
 router.post('/', function(req, res, next){
