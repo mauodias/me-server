@@ -65,7 +65,7 @@ router.post('/novo', function(req, res, next) {
                 pedido.ItemPedidos.push({Item: each.Item, Obs: each.Obs});
             });
             pedido.save();
-            comanda.ItemPedidos.push(pedido);
+            comanda.Pedidos.push(pedido);
             comanda.save();
             req.app.io.emit('cozinha');
             res.json(pedido);
