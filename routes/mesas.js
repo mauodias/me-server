@@ -32,7 +32,7 @@ router.post('/', function(req, res, next){
             },{
                 IsLivre: false
             }, function(err, mesa){
-                Comanda.create({new: true},{
+                Comanda.create({
                     IdCliente: 0,
                     Mesa: req.body.NumMesa,
                     Encerrada: false,
@@ -42,7 +42,6 @@ router.post('/', function(req, res, next){
                 }, function(err, comanda) {
                     if (err) return next(err);
                     res.json(comanda);
-                    console.log('Comanda criada: ' + comanda.Id);
                 });
             });
         }

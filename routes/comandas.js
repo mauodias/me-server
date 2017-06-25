@@ -6,7 +6,8 @@ var Pedido = require('../models/Pedido.js')
 
 /* GET /comandas. */
 router.get('/', function(req, res, next) {
-    console.log('GET /comandas')
+    var logger = require('../app.js').logger;
+    logger('comandas', 'GET /comanda/' + req.params.Id);
     Comanda.find({}, function(err, items) {
         if (err) return next(err);
         res.json(items);

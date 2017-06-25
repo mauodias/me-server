@@ -7,7 +7,7 @@ var ComandaSchema = new mongoose.Schema({
     IdCliente: Number,
     Mesa: Number,
     Encerrada: Boolean,
-    Pedidos: [{type: Pedido.schema}],
+    Pedidos: [Pedido.schema],
     DataEntrada: Date,
     DataFechamento: Date,
 });

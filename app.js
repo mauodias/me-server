@@ -42,8 +42,7 @@ app.use('/cardapio', cardapio);
 app.use('/pedidos', pedidos);
 app.use('/mesas', mesas);
 app.use('/reset', reset);
-app.use('/comandas', comandas)
-//app.use('/comandas', comandas);
+app.use('/comandas', comandas);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
