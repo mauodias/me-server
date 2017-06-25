@@ -46,31 +46,30 @@ router.get('/delete/:id', function(req, res, next){
 router.post('/novo', function(req, res, next) {
     var logger = require('../app.js').logger;
     logger('pedidos', 'POST /pedidos/novo');
-    Pedido.create({
-        ItemPedidos: [],
-        IdComanda: req.body.IdComanda,
-        HoraCriacao: Date.now(),
-        Status: 0,
-        HoraPronto: null
-    }, function(err, pedido) {
+
+    Comanda.findOne({
+        Id: req.body.IdComanda
+    }, function(err, comanda){
         if (err) return next(err);
-
-        var itemped = req.body.ItemPedidos;
-        itemped.forEach(function(each, index){
-            pedido.ItemPedidos.push({Item: each.Item, Obs: each.Obs});
-        });
-        pedido.save();
-
-        Comanda.findOne({
-            Id: req.body.IdComanda
-        }, function(err, comanda){
+        Pedido.create({
+            ItemPedidos: [],
+            IdComanda: req.body.IdComanda,
+            HoraCriacao: Date.now(),
+            Status: 0,
+            HoraPronto: null
+        }, function(err, pedido) {
             if (err) return next(err);
+
+            var itemped = req.body.ItemPedidos;
+            itemped.forEach(function(each, index){
+                pedido.ItemPedidos.push({Item: each.Item, Obs: each.Obs});
+            });
+            pedido.save();
             comanda.ItemPedidos.push(pedido);
             comanda.save();
+            req.app.io.emit('cozinha');
+            res.json(pedido);
         });
-
-        req.app.io.emit('cozinha');
-        res.json(pedido);
     });
 });
 
