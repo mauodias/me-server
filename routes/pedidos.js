@@ -45,8 +45,8 @@ router.get('/delete/:id', function(req, res, next){
 /* POST /pedidos/novo?{params} */
 router.post('/novo', function(req, res, next) {
     var logger = require('../app.js').logger;
-    logger('pedidos', 'GET /pedidos/novo');
-    Pedido.create({new: true}, {
+    logger('pedidos', 'POST /pedidos/novo');
+    Pedido.create({
         ItemPedidos: [],
         IdComanda: req.body.IdComanda,
         HoraCriacao: Date.now(),
