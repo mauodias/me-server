@@ -25,7 +25,6 @@ router.get('/:id', function(req, res, next) {
 router.post('/novo', function(req, res, next) {
     console.log(req.query);
     Item.create({
-        Id: req.query.id,
         Nome: req.query.nome,
         Descricao: req.query.desc,
         Ingredientes: req.query.ingredientes.split(','),
