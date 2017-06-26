@@ -23,12 +23,11 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /cardapio/novo */
 router.post('/novo', function(req, res, next) {
-    console.log(req.query);
     Item.create({
-        Nome: req.query.nome,
-        Descricao: req.query.desc,
-        Ingredientes: req.query.ingredientes.split(','),
-        Preco: req.query.preco
+        Nome: req.body.nome,
+        Descricao: req.body.desc,
+        Ingredientes: req.body.ingredientes.split(','),
+        Preco: req.body.preco
     }, function(err, post) {
         if (err) return next(err);
         res.json(post);
