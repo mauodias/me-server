@@ -36,7 +36,7 @@ router.post('/fechar', function(req, res, next) {
         if (err) return next(err);
         comanda.Encerrada = true;
         comanda.DataFechamento = Date.now();
-        comanda.salvar();
+        comanda.save();
         Mesa.findOneAndUpdate({
             NumMesa: comanda.Mesa
         },{
