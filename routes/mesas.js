@@ -64,14 +64,14 @@ router.post('/fechar', function(req, res, next){
                 IsLivre: true
             }, function(err, mesa){
                 if (err) return next(err);
-                Comanda.findOneAndUpdate({
+                Comanda.findOne({
                     Mesa: req.body.NumMesa,
                     Encerrada: false
-                },{
-                    Encerrada: true,
-                    DataFechamento: Date.now()
                 }, function(err, comanda) {
                     if (err) return next(err);
+                    comanda.Encerrada = true;
+                    comanda.DataFechamento = Date.now();
+                    comanda.save();
                     res.json(comanda);
                 });
             });
