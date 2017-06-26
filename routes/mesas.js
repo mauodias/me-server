@@ -64,7 +64,7 @@ router.post('/fechar', function(req, res, next){
                 IsLivre: true
             }, function(err, mesa){
                 if (err) return next(err);
-                Comanda.findOneAndUpdate({new: true},{
+                Comanda.findOneAndUpdate({
                     Mesa: req.body.NumMesa,
                     Encerrada: false
                 },{
