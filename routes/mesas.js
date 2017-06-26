@@ -52,8 +52,7 @@ router.post('/', function(req, res, next){
     });
 });
 
-router.post('/fechar', function(req, res, next){
-    var result;
+router.post('/fechar', function(req, res, next){;
     Mesa.findOne({
         NumMesa: req.body.NumMesa
     }, function(err, mesa) {
