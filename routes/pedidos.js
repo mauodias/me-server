@@ -54,6 +54,7 @@ router.post('/novo', function(req, res, next) {
         Pedido.create({
             ItemPedidos: [],
             IdComanda: req.body.IdComanda,
+            NumMesa: comanda.NumMesa,
             HoraCriacao: Date.now(),
             Status: 0,
             HoraPronto: null
