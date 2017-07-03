@@ -44,6 +44,7 @@ router.post('/', function(req, res, next){
                     res.json(comanda);
                 });
             });
+            req.app.io.emit('gerente');
         }
         else {
             res.json(false);
@@ -74,6 +75,7 @@ router.post('/fechar', function(req, res, next){;
                     res.json(comanda);
                 });
             });
+            req.app.io.emit('gerente');
         }
         else {
             res.json(false);

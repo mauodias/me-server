@@ -44,6 +44,7 @@ router.post('/fechar', function(req, res, next) {
         },function(err, mesa){
             if (err) return next(err);
         });
+        req.app.io.emit('gerente');
         res.json(comanda);
     });
 });
